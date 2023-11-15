@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class enhanced2525 {
+public class Enhanced2525 {
     public static void main(String[] args) {
         
         Scanner scan = new Scanner(System.in);
