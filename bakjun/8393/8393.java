@@ -5,6 +5,8 @@ public class 8393 {
 
 		Scanner scan = new Scanner(System.in);
 		int endNum = scan.nextInt();
+		scan.close();
+		
 		int total=0;
 		
 		for(int i=1; i<=endNum; i++) {
@@ -12,7 +14,5 @@ public class 8393 {
 		}
 		
 		System.out.println(total);
-
-		scan.close();
 	}
 }
