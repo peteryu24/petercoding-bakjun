@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Slower1037 {
+public class Array1037 {
 	public static void main(String[] args) {
 
 		Scanner scan = new Scanner(System.in);
