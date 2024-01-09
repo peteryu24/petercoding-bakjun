@@ -12,8 +12,8 @@ class Solution {
 
 		int answer = 1; // 곱셈을 위해 1로 초기화
 
-		for (int categoryCnt : clothesCntByCategory.values()) {
-			answer *= (categoryCnt + 1); // 카테고리 별 의상 갯수 + 1(아무것도 안 입는 경우의 수)
+		for (int clothesCnt : clothesCntByCategory.values()) {
+			answer *= (clothesCnt + 1); // 카테고리 별 의상 갯수 + 1(아무것도 안 입는 경우의 수)
 		}
 
 		return answer - 1; // 하나도 안 입는 경우의 수 배제
