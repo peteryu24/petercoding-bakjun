@@ -1,9 +1,8 @@
 import java.util.HashMap;
-import java.util.Map;
 
 class Solution {
     public int solution(String[][] clothes) {
-        Map<String, Integer> wardrobe = new HashMap<>();
+        HashMap<String, Integer> wardrobe = new HashMap<>();
 
         for (String[] cloth : clothes) {
             String category = cloth[1];
