@@ -1,20 +1,21 @@
 import java.util.HashMap;
 
 class Solution {
-    public int solution(String[][] clothes) {
-        HashMap<String, Integer> wardrobe = new HashMap<>();
+	public int solution(String[][] clothes) {
 
-        for (String[] cloth : clothes) {
-            String category = cloth[1];
-            wardrobe.put(category, wardrobe.getOrDefault(category, 0) + 1);
-        }
+		HashMap<String, Integer> clothesCntByCategory = new HashMap<>(); // 옷들을 담을 옷장
 
-        int answer = 1;
+		for (String[] getCategory : clothes) {
+			String category = getCategory[1]; // clothes[i][1]에 접근하여 카테고리 추춣 
+			clothesCntByCategory.put(category, clothesCntByCategory.getOrDefault(category, 0) + 1); // 신규 or 기존 카테고리에 의상 추가
+		}
 
-        for (int typeCount : wardrobe.values()) {
-            answer *= (typeCount + 1);
-        }
+		int answer = 1; // 곱셈을 위해 1로 초기화
 
-        return answer - 1;
-    }
+		for (int categoryCnt : clothesCntByCategory.values()) {
+			answer *= (categoryCnt + 1); // 카테고리 별 의상 갯수 + 1(아무것도 안 입는 경우의 수)
+		}
+
+		return answer - 1; // 하나도 안 입는 경우의 수 배제
+	}
 }
