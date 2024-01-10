@@ -14,7 +14,7 @@ class Solution {
 			int phoneBookItemLength = phoneBook[i].length();
 			
 			for (int j = 1; j < phoneBookItemLength; j++) {
-				if (phoneSet.contains(phoneBook[i].substring(0, i)))
+				if (phoneSet.contains(phoneBook[i].substring(0, j)))
 					return false;
 			}
 		}
