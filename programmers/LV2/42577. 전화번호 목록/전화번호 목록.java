@@ -1,17 +1,22 @@
-import java.util.HashMap;
+import java.util.HashSet;
 
 class Solution {
-	public boolean solution(String[] phoneNum) {
-		HashMap<String, Integer> phoneBook = new HashMap<>();
+	public boolean solution(String[] phoneBook) {
+		HashSet<String> phoneSet = new HashSet<>();
 
-		for (int i = 0; i < phoneNum.length; i++)
-			phoneBook.put(phoneNum[i], i);
+		int phoneBookLength = phoneBook.length;
+		for (int i = 0; i < phoneBookLength; i++) {
+			phoneSet.add(phoneBook[i]);
+		}
 
-		for (int i = 0; i < phoneNum.length; i++)
-			for (int j = 0; j < phoneNum[i].length(); j++)
-				if (phoneBook.containsKey(phoneNum[i].substring(0, j)))
+		for (int i = 0; i < phoneBookLength; i++) {
+			int phoneBookItemLength = phoneBook[i].length();
+			for (int j = 1; j < phoneBookItemLength; j++) {
+				if (phoneSet.contains(phoneBook[i].substring(0, i))) {
 					return false;
-
+				}
+			}
+		}
 		return true;
 	}
 }
