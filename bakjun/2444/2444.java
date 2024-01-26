@@ -7,7 +7,7 @@ public class 2444 {
 		int n = sc.nextInt();
 		int i, j, k, l;
 		sc.close();
-
+ 
 		for (i = 0; i < n; i++) {
 			for (j = i + 1; j < n; j++) {
 				System.out.print(" ");
