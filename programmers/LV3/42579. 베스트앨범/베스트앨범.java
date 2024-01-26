@@ -1,5 +1,3 @@
-package bakjun;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +10,7 @@ class Solution {
     final int TOP_SONGS_LIMIT = 2;
 
     HashMap<String, Integer> totalPlayCntByGenre = new HashMap<>();
-    HashMap<String, List<int[]>> songIndexAndPlayCntByGenre = new HashMap<>();
+    HashMap<String, List<int[]>> songIdxAndPlayCntByGenre = new HashMap<>();
 
     public int[] solution(String[] genres, int[] playCnt) {
         initializeMaps(genres, playCnt);
@@ -23,7 +21,7 @@ class Solution {
     void initializeMaps(String[] genres, int[] plays) {
         for (int i = 0; i < genres.length; i++) {
             totalPlayCntByGenre.put(genres[i], totalPlayCntByGenre.getOrDefault(genres[i], 0) + plays[i]);
-            songIndexAndPlayCntByGenre.computeIfAbsent(genres[i], k -> new ArrayList<>())
+            songIdxAndPlayCntByGenre.computeIfAbsent(genres[i], k -> new ArrayList<>())
                                  .add(new int[] { i, plays[i] });
         }
     }
@@ -42,7 +40,7 @@ class Solution {
     int[] topSongsForGenre(String[] sortedGenres) {
         List<Integer> topSongs = new ArrayList<>();
         for (String genre : sortedGenres) {
-            PriorityQueue<int[]> queue = createPriorityQueueForSong(songIndexAndPlayCntByGenre.get(genre));
+            PriorityQueue<int[]> queue = createPriorityQueueForSong(songIdxAndPlayCntByGenre.get(genre));
             for (int i = 0; i < TOP_SONGS_LIMIT && !queue.isEmpty(); i++) {
                 topSongs.add(queue.poll()[SONG_INDEX]);
             }
