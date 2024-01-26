@@ -1,55 +1,63 @@
-package bakjun;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 class Solution {
-	HashMap<String, Integer> genrePlayCount = new HashMap<>();
-	HashMap<String, List<int[]>> songsInGenre = new HashMap<>();
+    final int SONG_INDEX = 0;
+    final int PLAY_COUNT = 1;
+    final int TOP_SONGS_LIMIT = 2;
 
-	public int[] solution(String[] genres, int[] plays) {
-		initializeMaps(genres, plays);
-		String[] sortedGenres = sortGenresByPlayCount();
-		return answerArray(sortedGenres);
-	}
+    HashMap<String, Integer> playCntByGenre = new HashMap<>();
+    HashMap<String, List<int[]>> songByGenreAndPlayCnt = new HashMap<>();
 
-	void initializeMaps(String[] genres, int[] plays) {
-		for (int i = 0; i < genres.length; i++) {
-			genrePlayCount.put(genres[i], genrePlayCount.getOrDefault(genres[i], 0) + plays[i]);
-			if (!songsInGenre.containsKey(genres[i])) {
-				songsInGenre.put(genres[i], new ArrayList<>());
-			}
-			songsInGenre.get(genres[i]).add(new int[] { i, plays[i] });
-		}
-	}
+    public int[] solution(String[] genres, int[] playCnt) {
+        initializeMaps(genres, playCnt);
+        String[] sortedGenres = sortGenresByPlayCnt();
+        return topSongsForGenre(sortedGenres);
+    }
 
-	String[] sortGenresByPlayCount() {
-		List<Map.Entry<String, Integer>> entries = new ArrayList<>(genrePlayCount.entrySet());
-		entries.sort((a, b) -> b.getValue().compareTo(a.getValue()));
-		String[] sortedGenres = new String[entries.size()];
-		for (int i = 0; i < entries.size(); i++) {
-			sortedGenres[i] = entries.get(i).getKey();
-		}
-		return sortedGenres;
-	}
+    void initializeMaps(String[] genres, int[] plays) {
+        for (int i = 0; i < genres.length; i++) {
+            playCntByGenre.put(genres[i], playCntByGenre.getOrDefault(genres[i], 0) + plays[i]);
+            songByGenreAndPlayCnt.computeIfAbsent(genres[i], k -> new ArrayList<>())
+                                 .add(new int[] { i, plays[i] });
+        }
+    }
 
-	int[] answerArray(String[] sortedGenres) {
-		List<Integer> answerList = new ArrayList<>();
-		for (String genre : sortedGenres) {
-			List<int[]> songs = songsInGenre.get(genre);
-			songs.sort((a, b) -> b[1] == a[1] ? a[0] - b[0] : b[1] - a[1]);
+    String[] sortGenresByPlayCnt() {
+        List<Map.Entry<String, Integer>> genreList = new ArrayList<>(playCntByGenre.entrySet());
+        genreList.sort((a, b) -> b.getValue().compareTo(a.getValue()));
+        
+        String[] sortedGenres = new String[genreList.size()];
+        for (int i = 0; i < genreList.size(); i++) {
+            sortedGenres[i] = genreList.get(i).getKey();
+        }
+        return sortedGenres;
+    }
 
-			answerList.add(songs.get(0)[0]);
-			if (songs.size() > 1) {
-				answerList.add(songs.get(1)[0]);
-			}
-		}
-		int[] result = new int[answerList.size()];
-		for (int i = 0; i < answerList.size(); i++) {
-			result[i] = answerList.get(i);
-		}
-		return result;
-	}
+    int[] topSongsForGenre(String[] sortedGenres) {
+        List<Integer> topSongs = new ArrayList<>();
+        for (String genre : sortedGenres) {
+            PriorityQueue<int[]> queue = createSongPriorityQueue(songByGenreAndPlayCnt.get(genre));
+            for (int i = 0; i < TOP_SONGS_LIMIT && !queue.isEmpty(); i++) {
+                topSongs.add(queue.poll()[SONG_INDEX]);
+            }
+        }
+
+        int[] result = new int[topSongs.size()];
+        for (int i = 0; i < topSongs.size(); i++) {
+            result[i] = topSongs.get(i);
+        }
+        return result;
+    }
+
+    PriorityQueue<int[]> createSongPriorityQueue(List<int[]> songs) {
+        PriorityQueue<int[]> queue = new PriorityQueue<>(
+            (a, b) -> a[PLAY_COUNT] == b[PLAY_COUNT] ? a[SONG_INDEX] - b[SONG_INDEX] : b[PLAY_COUNT] - a[PLAY_COUNT]
+        );
+        queue.addAll(songs);
+        return queue;
+    }
 }
