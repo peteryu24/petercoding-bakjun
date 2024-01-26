@@ -10,7 +10,7 @@ class Solution {
 
 	public int[] solution(String[] genres, int[] plays) {
 		initializeMaps(genres, plays);
-		List<String> sortedGenres = sortGenresByPlayCount();
+		List<String> sortedGenres = sortGenresByPlayCount(); 
 		return buildAnswerArray(sortedGenres);
 	}
 
