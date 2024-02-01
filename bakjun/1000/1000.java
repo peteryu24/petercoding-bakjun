@@ -7,7 +7,7 @@ public class 1000 {
         int a = scan.nextInt(); 
         int b = scan.nextInt();
         
-        scan.close();
+        scan.close();      
         
         System.out.println(a + b);
     }
