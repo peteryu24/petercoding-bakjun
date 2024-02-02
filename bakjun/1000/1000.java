@@ -9,6 +9,6 @@ public class 1000 {
         
         scan.close();      
         
-        System.out.println(a + b);
+        System.out.println(a + b);    
     }
 }
