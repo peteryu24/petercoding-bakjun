@@ -11,7 +11,7 @@ class Solution {
 			int dueDate = (100 - progresses[i] + speeds[i] - 1) / speeds[i];
 			deployQueue.offer(dueDate);
 		}
-
+ 
 		ArrayList<Integer> deployCntPerDay = new ArrayList<>();
 		while (!deployQueue.isEmpty()) {
 			int headDueDate = deployQueue.poll();
