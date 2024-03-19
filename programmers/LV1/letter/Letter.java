@@ -3,4 +3,4 @@ class Solution {
         return message.length()*2;
     }
 }  
-
+  
